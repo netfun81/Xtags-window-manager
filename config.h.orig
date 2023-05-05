@@ -1,0 +1,141 @@
+/*
+ * XTags - Simple multitag implementation for X11
+ * Copyright (C) 2008  Claudio M. Alessi
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+ * Graphical stuff
+*/
+#if 0
+
+/* Directive to spawn using an OSD message */
+#define OSD_TOOL	"osd_cat"
+#define OSD_FONT	"-*-helvetica-*-*-normal-*-34-*-*-*-*-*-*-*"
+#define OSD_OPTS	"-p bottom -o -90 -i 50 -f '" OSD_FONT "' -c purple -d1"
+#define ORUN(cmd)	(cmd "& echo \"( Running " #cmd " )\" |" OSD_TOOL " " OSD_OPTS)
+
+/* Directives to spawn using a vocal synthesizer */
+#define SYNT_TOOL	"espeak"
+#define SYNT_OPTS	"-p 30"
+#define SRUN(cmd)	(cmd "& echo " #cmd " | " SYNT_TOOL " " SYNT_OPTS)
+
+/* Moving effects */
+#define SLIDE_SPEED 10	/* Slide speed (max useful value is 100) */
+#define SLIDE_IN(c)	/* The slide-in effect definition */		\
+	int i, pct = (info.width - c->x) / (1000 / SLIDE_SPEED);	\
+        XMoveWindow(info.dpy, c->win, c->x, c->y);			\
+	for(i = info.width - 1; i > (int)c->x; i -= pct)		\
+           XMoveWindow(info.dpy, c->win, i, c->y);
+#define SLIDE_OUT(c)	/* The slide-out effect definition */		\
+	int i, pct = (info.width - c->x) / (1000 / SLIDE_SPEED);	\
+	for(i = c->x + 1; i < info.width - 1; i += pct)			\
+           XMoveWindow(info.dpy, c->win, i, c->y);
+
+#endif /* Graphical stuff */
+
+#define LAYOUT		maximize	/* Default layout: maximize/floating */
+#define TAGS		4		/* Number of tags used */
+#define MRFACT		2		/* Incremental factor for move/resize */
+#define BORDER_SIZE	3		/* Border size (in pixel) */
+#define BORDER_COLSEL	"#333399"	/* Border color for the selected client */
+#define BORDER_COLNORM	"#123456"	/* Border color for background clients */
+#define CHESS_C4R	3		/* Clients for row in chess layout */
+
+/* Convenient constants for common keys */
+#define META		Mod1Mask
+#define CTRL		ControlMask
+#define SHIFT		ShiftMask
+
+/*
+ * Client's filters
+*/
+static const Filter filters[] = {
+   /*
+    * Name		Tag	Floating
+   */
+   { "MPlayer",		NULL,	True	},
+   { "Gimp",		"3",	True	},
+   { "xmessage",	NULL,	True	},
+};
+
+/*
+ * Key bindings
+*/
+static const Key keys[] = {
+   /*
+    * Modifier		Key		Function	Argument
+   */
+   { META,   		XK_m,		layout,		"maximize"	},
+   { META,   		XK_f,		layout,		"floating"	},
+   { META,   		XK_g,		layout,		"chess"		},
+   { META|CTRL,  	XK_Tab,		flyout,		"chess"		},
+
+   { META,   		XK_space,	snap,		NULL		},
+   { 0,			XK_F1,		tagview,	"0"		},
+   { 0,			XK_F2,		tagview,	"1"		},
+   { 0,			XK_F3,		tagview,	"2"		},
+   { 0,			XK_F4,		tagview,	"3"		},
+   { META,		XK_Tab,		tagview,	NULL /* Prev */	},
+   { META|SHIFT,	XK_p,		tagview,	"prev"		},
+   { META|SHIFT,	XK_n,		tagview,	"next"		},
+
+   { META,		XK_F1,		client_totag,	"0"		},
+   { META,		XK_F2,		client_totag,	"1"		},
+   { META,		XK_F3,		client_totag,	"2"		},
+   { META,		XK_F4,		client_totag,	"3"		},
+   { META|SHIFT,	XK_Tab,		client_totag,	NULL /* Prev */	},
+   { META|SHIFT,   	XK_F1,		client_tag,	"0"		},
+   { META|SHIFT,   	XK_F2,		client_tag,	"1"		},
+   { META|SHIFT,   	XK_F3,		client_tag,	"2"		},
+   { META|SHIFT,   	XK_F4,		client_tag,	"3"		},
+   { META|SHIFT,   	XK_Return,	client_tag,	NULL /* All */	},
+
+   { META|CTRL,		XK_1,		client_select,	"0"		},
+   { META|CTRL,		XK_2,		client_select,	"1"		},
+   { META|CTRL,		XK_3,		client_select,	"2"		},
+   { META|CTRL,		XK_4,		client_select,	"3"		},
+   { META|CTRL,		XK_n,		client_next,	NULL		},
+   { META|CTRL,		XK_p,		client_prev,	NULL		},
+
+   { META|CTRL,		XK_l,		client_label,	NULL		},
+   { META|CTRL,		XK_f,		client_focus,	NULL		},
+
+   { META,		XK_h,		client_move,	"4" /* Left */	},
+   { META,		XK_l,		client_move,	"6" /* Right */	},
+   { META,		XK_j,		client_move,	"2" /* Down */	},
+   { META,		XK_k,		client_move,	"8" /* Up */	},
+   { META|SHIFT,	XK_h,		client_resize,	"4"		},
+   { META|SHIFT,	XK_l,		client_resize,	"6"		},
+   { META|SHIFT,	XK_j,		client_resize,	"2"		},
+   { META|SHIFT,	XK_k,		client_resize,	"8"		},
+   { META|CTRL,		XK_h,		client_resize,	"-4"		},
+   { META|CTRL,		XK_l,		client_resize,	"-6"		},
+   { META|CTRL,		XK_j,		client_resize,	"-2"		},
+   { META|CTRL,		XK_k,		client_resize,	"-8"		},
+
+   { META|CTRL|SHIFT,	XK_Return,	clients_totag,	NULL /* Curr */	},
+   { META|CTRL|SHIFT,	XK_a,		clients_kill,	NULL 		},
+   { META|CTRL|SHIFT,	XK_c,		client_kill,	NULL		},
+   { META|CTRL|SHIFT,	XK_q,		quit,		NULL		},
+
+   { META,		XK_Return,	spawn,		"urxvt"		},
+   { CTRL|SHIFT,	XK_f,		spawn,		"iceweasel"	},
+   { CTRL|SHIFT,	XK_r,		spawn,		"xrefresh"	},
+   { CTRL|SHIFT,	XK_x,		spawn,		"xlock"		},
+   { CTRL|SHIFT,	XK_o,		spawn,	"xset dpms force off"	},
+   { CTRL|SHIFT,	XK_d,		spawn,		"dmenu_run"	},
+};
+

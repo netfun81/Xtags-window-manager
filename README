@@ -1,0 +1,33 @@
+
+XTags is a little keyboard-driven program which implements tags for X11.
+It's a pseudo-WM called WHM (Window Helper Manager). The main goal is to
+get rid of a "real" WM by using it with dvtm on the master tag and put
+the secondary clients into the other tags.
+
+
+* Installation
+
+You only need to run the following command as root:
+
+   # make clean install
+
+
+* Usage
+
+You can run XTags as a normal program if you don't have any Window
+Manager (WM) running. Alternatively, put the following line into your
+~/.xinitrc file and ensure that no other WMs are launched.
+
+   exec xtags
+
+
+* Support
+
+It's possible to get support by posting into the xtags-users mailing
+list. You should read the whole xtags(1) manual page before to ask
+for help. Please, visit the official XTags web site at the following
+URI: http://xtags.sf.net/.
+
+
+Enjoy XTags!
+

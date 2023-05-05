@@ -1,0 +1,207 @@
+.\"
+.\" Copyright (C) 2008  Claudio M. Alessi
+.\"
+.\"This program is free software: you can redistribute it and/or modify
+.\"it under the terms of the GNU General Public License as published by
+.\"the Free Software Foundation, either version 3 of the License, or
+.\"(at your option) any later version.
+.\"
+.\"This program is distributed in the hope that it will be useful,
+.\"but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"GNU General Public License for more details.
+.\"
+.\"You should have received a copy of the GNU General Public License
+.\"along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\"
+.nr N -1
+.nr D 2
+.TH XTags 1 Local
+.UC 4
+.SH NAME
+XTags \- X11 tags implementation
+.SH SYNOPSIS
+.B xtags [\-v]
+.\"
+.\" SECTION DESCRIPTION
+.\"
+.SH DESCRIPTION
+XTags is a little keyboard-driven program which implements tags for X11.
+It's a pseudo-WM called WHM (Window Helper Manager). It's main goal is to
+get rid of a "real" WM by using it with dvtm on the master tag and put
+the secondary clients into the other tags. The basic concepts was inspired
+by dwm, so was  the configurability through editing the source code. All
+the functionality is accessible through the keyboard; the mouse is simply
+ignored. This fully meets the author's needs.
+.\"
+.\" SECTION TAGS
+.\"
+.SH TAGS
+A tag is a set of clients are associated to a specified ID (which on
+XTags is a integer greater than or equal to zero). All the untagged
+clients are moved (just a pixel) out of the visible area of the screen;
+the clients of the current tag (which should always be visible) are
+arranged depending on the selected layout. This make clients handling
+easy, fast and flexible.
+.PP
+Yes, someone said that the windows do less computing when they are
+unmapped but i never care about it and i'll never do in future.
+.\"
+.\" SECTION MOVE/RESIZE
+.\"
+.SH MOVE/RESIZE
+There is no much to say about move/resize clients. Though, you would know
+a bit on how to set the arguments for the relative functions: client_move()
+and client_resize(). Both functions take the
+.I route
+where to do the action. This argument is specified by using one of the
+numbers of the numpad: 2=down, 4=left, 6=right, 8=up. Wrong values are
+just ignored. For the client_resize() function it's possible to specify
+negative values in order to decrement the client size. For more
+informations see each's function explanation below.
+.\"
+.\" SECTION CONFIGURATION
+.\"
+.SH CONFIGURATION
+The configuration is hardcoded into the source code. You may only need to
+edit the config.h header file. This make XTags faster, more compact and
+secure. Someone also said that this is a simpler way; of course the author
+agreed. To learn about configuration read the following.
+.PP
+To well configure XTags in order to fit your need you have to know at
+least what functions it provides, what they really do and alsa what arguments
+they take.
+.TP
+.B layout
+Switch to the given layout.
+.TP
+.B tagview
+Switch to the given tag. If the argument is NULL the previous tag seen is
+used instead. It is possible to use the arguments
+.I prev
+and
+.I next
+to switch relatively to the previous and the next tag in the sequence.
+.TP
+.B client_totag
+Move the current client to the specified tag or to the previous tag if
+the argument is NULL. Then untag the client from all the other tags.
+.TP
+.B clients_totag
+Move
+.I all
+clients from all tags to the specified one or to the current if the
+argument is NULL.
+.TP
+.B clients_kill
+Close all clients into the current tag.
+.TP
+.B client_prev
+Switch to the previous client into the current tag.
+.TP
+.B client_next
+Switch to the next client into the current tag.
+.TP
+.B client_select
+Switch to the client matching the given ID number [0-9].
+.TP
+.B client_tag
+Toggle the current client on the specified tag or add it to all tags if
+the argument is NULL. See also the client_totag() function.
+.TP
+.B client_kill
+Force the current client to be closed.
+.TP
+.B client_move
+Move the current client of
+.I n
+pixel (where n is the value of the MR_OFFSET constant from config.h) in the
+specified direction.
+.TP
+.B client_resize
+Resize the current client. If the argument is a negative integer then the
+client size is decremented from the opposite size. If it's positive, it's
+enlarged from the specified side. The values for the size are the same as
+.I client_move
+with the only difference to take positive values for clients
+which have to be enlarged, and negative integers instead. A zero value is
+just ignored ATM; this may change in future.
+.TP
+.B client_label
+Set a one character label for the current client. This can be select any
+time later with the client_focus() function.
+.TP
+.B client_focus
+Focus the client which match the given one character label (previously
+set with the client_label() function).
+.TP
+.B spawn
+Run the specified command (create a new process).
+.TP
+.B quit
+Move all the clients from all tags to the current one and exit.
+.TP
+.B snap
+Toggle floating from the current client regardless of the current tag's
+layout.
+.TP
+.B flyout
+Switch to the given "selection layout". This mean that the layout will
+be active until an integer is specified in order to select one of the
+listed clients, then the previous layout is restored. The clients
+sequence starts from one, instead of zero, in order to fit the
+client_select() range.
+.\"
+.\" SECTION FILTERS
+.\"
+.SH FILTERS
+Since the release 0.4, XTags allow to filter the clients (on start) by
+configuring them with a given set of options. Actually is only possible
+to choose the destination tag for the client (or NULL to use current one)
+and/or to snap it, further versions of XTags may provide better and newer
+options. It is possible (and should be enough) to read the comments from
+the config.h file.
+.\"
+.\" SECTION LAYOUTS
+.\"
+.SH LAYOUTS
+Actually only three layouts are provided: maximize, floating and chess.
+The first just maximize all clients, the floating layout is the "normal"
+general layout used by most Window Managers. It just let the users choose
+where and how (e.g. position and size) to place the clients on the screen.
+The latter is new with XTags-0.5 and just places the clients as in a grid
+where there are N clients for row. The value of N is set through the
+CHESS_C4R preprocessor directive in config.h. This is mainly used with
+flyout() in order to get a look of all the current clients. With all
+layouts it's possible to navigate through the clients with one of the
+functions client_next(), client_prev() or client_select().
+.\"
+.\" SECTION BUGS
+.\"
+.SH BUGS
+Because of the way XTags uses to intercepted events, the xkill(1) tool
+doesn't work at all. There is no reason to think that this will be fixed
+later.
+.TP
+For some weird reason the aMSN siblings are not handled properly.
+.\"
+.\" SECTION COPYRIGHT
+.\"
+.SH COPYRIGHT
+Copyright (C) 2008  Claudio M. Alessi
+.PP
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.PP
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\"
+.\" End.
+.\"

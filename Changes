@@ -1,0 +1,42 @@
+
+Changes for XTags-0.5
+
+
+. Fixed a bug on client_filter() about the XGetClassHint() function.
+  Now it is checked for a zero value.
+
+. Fixed a memory leak on client_filter() which didn't call XFree
+  on res_class and res_name.
+
+. Added the user function flyout() which switch to the given
+  "selection layout" in order to get a view of all clients (if
+  used with the new chess layout). See the LAYOUTS section and
+  the flyout() function of the manual page for more informations.
+
+. New layout chess. It is controlled by the CHESS_C4L preprocessor
+  directive which set the number of clients for each line. Then the
+  clients are just fit into the screen to groups of CHESS_C4L for
+  each line.
+
+. Added support for clients' labels. This allow to assign a one
+  character label to each client (one for time) and then re-focus
+  it by selecting that label. The idea born from a pancake's post
+  on the dwm mailing list. Here is the related URI:
+
+     http://www.suckless.org/pipermail/dwm/2008-April/005509.html
+
+  This feature is not an improvement for the client_select() function
+  but it's a new concept at all. So, both client_select() and the two
+  client_label() and client_focus() routines will stay in upstream.
+
+. Added the clients_kill() function which close all clients into the
+  current tag.
+
+. New macro SRUN() which uses SYNT_TOOL (default espeak) with the
+  options specified by the SYNT_OPTS directive, in order to play
+  a vocal synthesizer before spawn.
+
+. Improved and updated the man page.
+
+. Other minor changes, fixes, impromevents and code cleanup.
+
