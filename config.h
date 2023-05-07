@@ -21,19 +21,19 @@
 */
 #if 0
 
-/* Directive to spawn using an OSD message */
-/*
-#define OSD_TOOL	"osd_cat"
-#define OSD_FONT	"-*-helvetica-*-*-normal-*-34-*-*-*-*-*-*-*"
-#define OSD_OPTS	"-p bottom -o -90 -i 50 -f '" OSD_FONT "' -c purple -d1"
-#define ORUN(cmd)	(cmd "& echo \"( Running " #cmd " )\" |" OSD_TOOL " " OSD_OPTS)
+/* Directive to spawn using an OSD message 
+ * #define OSD_TOOL	"osd_cat"
+ * #define OSD_FONT	"-*-helvetica-*-*-normal-*-34-*-*-*-*-*-*-*"
+ * #define OSD_OPTS	"-p bottom -o -90 -i 50 -f '" OSD_FONT "' -c purple -d1"
+ * #define ORUN(cmd)	(cmd "& echo \"( Running " #cmd " )\" |" OSD_TOOL " " OSD_OPTS)
 */
-/* Directives to spawn using a vocal synthesizer */
-/*
-#define SYNT_TOOL	"espeak"
-#define SYNT_OPTS	"-p 30"
-#define SRUN(cmd)	(cmd "& echo " #cmd " | " SYNT_TOOL " " SYNT_OPTS)
+
+/* Directives to spawn using a vocal synthesizer
+ * #define SYNT_TOOL	"espeak"
+ * #define SYNT_OPTS	"-p 30"
+ * #define SRUN(cmd)	(cmd "& echo " #cmd " | " SYNT_TOOL " " SYNT_OPTS)
 */
+
 /* Moving effects */
 #define SLIDE_SPEED 10	/* Slide speed (max useful value is 100) */
 #define SLIDE_IN(c)	/* The slide-in effect definition */		\
