@@ -80,23 +80,23 @@ static const Key keys[] = {
    /*
     * Modifier		Key		Function	Argument
    */
-   { META,   		XK_f,		layout,		"maximize"	},
-   { META,   		XK_space,	layout,		"floating"	},
-   { META,   		XK_g,		layout,		"chess"		},
+   { META,			XK_f,		layout,		"maximize"	},
+   { META,			XK_space,	layout,		"floating"	},
+   { META,			XK_g,		layout,		"chess"		},
 
    { META,			XK_z,		tagview,	"0"		},
    { META,			XK_x,		tagview,	"1"		},
    { META,			XK_c,		tagview,	"2"		},
    { META,			XK_v,		tagview,	"3"		},
    { META,			XK_b,		tagview,	"4"		},
-   { META,  		XK_Left,	tagview,	"prev"	},
-   { META,	    	XK_Right,	tagview,	"next"	},
+   { META,			XK_Left,	tagview,	"prev"	},
+   { META,			XK_Right,	tagview,	"next"	},
 
-   { META|SHIFT, 	XK_z,		client_totag,	"0"		},
-   { META|SHIFT, 	XK_x,		client_totag,	"1"		},
-   { META|SHIFT, 	XK_c,		client_totag,	"2"		},
-   { META|SHIFT, 	XK_v,		client_totag,	"3"		},
-   { META|SHIFT, 	XK_b,		client_totag,	"4"		},
+   { META|SHIFT,	XK_z,		client_totag,	"0"		},
+   { META|SHIFT,	XK_x,		client_totag,	"1"		},
+   { META|SHIFT,	XK_c,		client_totag,	"2"		},
+   { META|SHIFT,	XK_v,		client_totag,	"3"		},
+   { META|SHIFT,	XK_b,		client_totag,	"4"		},
    
    { META,			XK_Tab,		client_next,	NULL	},
    { META|SHIFT,	XK_Tab,		client_prev,	NULL	},
