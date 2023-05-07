@@ -66,7 +66,7 @@
 */
 static const Filter filters[] = {
    /*
-    * Name		Tag	Floating
+    * Name          Tag#    Floating
    */
    { "MPlayer",		NULL,	True	},
    { "Gimp",		NULL,	True	},
@@ -78,7 +78,7 @@ static const Filter filters[] = {
 */
 static const Key keys[] = {
    /*
-    * Modifier		Key		Function	Argument
+    * Modifier      Key         Function      Argument
    */
    { META,          XK_f,       layout,       "maximize"          },
    { META,          XK_space,   layout,       "floating"          },
