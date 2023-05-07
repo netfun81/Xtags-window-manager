@@ -54,7 +54,7 @@
 #define BORDER_SIZE	3		/* Border size (in pixel) */
 #define BORDER_COLSEL	"#333399"	/* Border color for the selected client */
 #define BORDER_COLNORM	"#123456"	/* Border color for background clients */
-#define CHESS_C4R	3		/* Clients for row in chess layout */
+#define CHESS_C4R	2		/* Clients for row in chess layout */
 
 /* Convenient constants for common keys */
 #define META		Mod4Mask
@@ -84,13 +84,13 @@ static const Key keys[] = {
    { META,   		XK_space,	layout,		"floating"	},
    { META,   		XK_g,		layout,		"chess"		},
 
-   { 0,			XK_z,		tagview,	"0"		},
-   { 0,			XK_x,		tagview,	"1"		},
-   { 0,			XK_c,		tagview,	"2"		},
-   { 0,			XK_v,		tagview,	"3"		},
-   { 0,			XK_b,		tagview,	"4"		},
-   { META,  	XK_Left,	tagview,	"prev"	},
-   { META,	    XK_Right,	tagview,	"next"	},
+   { META,			XK_z,		tagview,	"0"		},
+   { META,			XK_x,		tagview,	"1"		},
+   { META,			XK_c,		tagview,	"2"		},
+   { META,			XK_v,		tagview,	"3"		},
+   { META,			XK_b,		tagview,	"4"		},
+   { META,  		XK_Left,	tagview,	"prev"	},
+   { META,	    	XK_Right,	tagview,	"next"	},
 
    { META|SHIFT, 	XK_z,		client_totag,	"0"		},
    { META|SHIFT, 	XK_x,		client_totag,	"1"		},
@@ -101,10 +101,10 @@ static const Key keys[] = {
    { META,			XK_Tab,		client_next,	NULL	},
    { META|SHIFT,	XK_Tab,		client_prev,	NULL	},
 
-   { META,		XK_h,		client_move,	"4" /* Left */	},
-   { META,		XK_l,		client_move,	"6" /* Right */	},
-   { META,		XK_j,		client_move,	"2" /* Down */	},
-   { META,		XK_k,		client_move,	"8" /* Up */	},
+   { META,			XK_h,		client_move,	"4" /* Left */	},
+   { META,			XK_l,		client_move,	"6" /* Right */	},
+   { META,			XK_j,		client_move,	"2" /* Down */	},
+   { META,			XK_k,		client_move,	"8" /* Up */	},
    { META|SHIFT,	XK_h,		client_resize,	"4"		},
    { META|SHIFT,	XK_l,		client_resize,	"6"		},
    { META|SHIFT,	XK_j,		client_resize,	"2"		},
@@ -115,15 +115,15 @@ static const Key keys[] = {
    { META|CTRL,		XK_k,		client_resize,	"-8"	},
 
    { META,			XK_d,		client_kill,	NULL	},
-   { META|SHIFT,	XK_q,		quit,		NULL		},
+   { META|SHIFT,	XK_q,		quit,			NULL	},
 
    { META,			XK_w,		spawn,		"firefox"		},
    { META,			XK_e,		spawn,		"thunar"		},
    { META,			XK_r,		spawn,		"dmenu_run"		},
    { META,			XK_t,		spawn,		"urxvt -rv"		},
-   { META,			XK_a,		spawn,		"pavucontrol" 	},
+   { META,			XK_a,		spawn,		"pavucontrol"	},
    { META,			XK_s,		spawn,		"slock"			},
-   { META|SHIFT,	XK_s,		spawn,		"loginctl suspend" },
+   { META|SHIFT,	XK_s,		spawn,		"loginctl suspend"	},
 
 };
 
