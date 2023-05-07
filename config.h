@@ -66,11 +66,11 @@
 */
 static const Filter filters[] = {
    /*
-    * Name          Tag#    Floating
+    * Name          Tag#        Floating
    */
-   { "MPlayer",		NULL,	True	},
-   { "Gimp",		NULL,	True	},
-   { "xmessage",	NULL,	True	},
+   { "MPlayer",     NULL,       True   },
+   { "Gimp",        NULL,       True   },
+   { "xmessage",    NULL,       True   },
 };
 
 /*
