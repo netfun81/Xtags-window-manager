@@ -122,7 +122,7 @@ static const Key keys[] = {
    { META,          XK_w,       spawn,         "firefox"          },
    { META,          XK_e,       spawn,         "thunar"           },
    { META,          XK_r,       spawn,         "dmenu_run"        },
-   { META,          XK_t,       spawn,         "urxvt -rv"        },
+   { META,          XK_t,       spawn,         "kcterm"           },
    { META,          XK_a,       spawn,         "pavucontrol"      },
    { META,          XK_s,       spawn,         "slock"            },
    { META|SHIFT,    XK_s,       spawn,         "loginctl suspend" },

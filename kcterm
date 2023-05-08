@@ -1,0 +1,1 @@
+urxvt -bg gray20 -fg gray80 -fn "xft:Bitstream Vera Sans Mono:pixelsize=15" &
